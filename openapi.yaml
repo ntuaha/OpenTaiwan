@@ -1,0 +1,36 @@
+openapi: 3.0.1
+info:
+  title: Open_Taiwan
+  description: check Open government data in Taiwan.
+  version: 'v1'
+servers:
+  - url: http://localhost:3333
+paths:
+  /reservoirs:
+    get:
+      operationId: reservoirs
+      summary: Get status Reservoir Resource in Taiwan
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/reservoirs'
+components:
+  schemas:
+    reservoirs:
+      type: array
+      items: 
+        type: object
+        properties:
+          ReservoirName:
+            type: string
+            description: Name of Reservoir.
+          RecordTime:
+            type: string
+            description: recoding time.
+          WaterLevel:
+            type: string
+            description: "water level of Reservoir"
+        description: List of Reservoirs' status.

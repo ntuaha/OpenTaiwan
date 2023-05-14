@@ -1,0 +1,19 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "OpenTaiwan",
+    "name_for_model": "OpenTaiwan",
+    "description_for_human": "A plugin to provide government information in Taiwan",
+    "description_for_model": "A plugin to provide government information in Taiwan",
+    "auth": {
+        "type": "none"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "http://localhost:3333/openapi.yaml",
+        "is_user_authenticated": false
+    },
+    "logo_url": "http://localhost:3333/logo.png",
+    "contact_email": "ntuaha@gmail.com",
+    "legal_info_url": "http://localhost:3333/legal",
+    "HttpAuthorizationType": "basic"
+}
