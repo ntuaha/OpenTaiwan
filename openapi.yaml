@@ -9,7 +9,7 @@ paths:
   /reservoirs:
     get:
       operationId: reservoirs
-      summary: Get status Reservoir Resource in Taiwan
+      summary: "Get status Reservoir Resource in Taiwan. Before ask the function, you should ask function:lists to get official full names"
       responses:
         "200":
           description: OK
@@ -17,8 +17,113 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/reservoirs'
+
+  /customer_support/creditcard:
+    post:
+      operationId: cs_cc
+      summary: "Get Credit card fees and customer service phone numbers and other information in Taiwan By institutions. Before ask the function, you should ask function:lists to get official full names"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cs_cc'
+      requestBody:
+        description: names of the institutions
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                names:
+                  type: array
+                  items:
+                    type: string
+                    description: the official full name
+                  description: the official full names of institutions
+
+  /lists:
+    post:
+      operationId: lists
+      summary: Get list of official full names with the specific type.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/names'
+      requestBody:
+        description: Get the list with the specific type
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type_name:
+                  type: string
+                  description: the name of type in ['finance','reservoir','other']
+
+parameters:
+- name: institutions
+  in: path
+  description: names of the institutions to use
+  required: true
+  schema:
+    type: array
+    items:
+      type: string  
+  style: simple
+
 components:
   schemas:
+    cs_cc:
+      type: array
+      items: 
+        type: object
+        properties:
+          'No':
+            type: string
+          'Card Issuing Organization Name':
+            type: string
+          'Accounts receivable included in the revolving credit principal, interest commencement date for each account':
+            type: string
+          'Reprinting statement fee':
+            type: string
+          'Check payment dishonored fee':
+            type: string
+          'Clearance (agency) repayment certificate fee':
+            type: string
+          'Foreign transaction settlement fee':
+            type: string
+          'Lost report fee':
+            type: string
+          "Cash advance fee":
+            type: string
+            description: Cash advance fee
+          'Review of signed transaction slip fee':
+            type: string
+          'Penalty (late processing fee)':
+            type: string
+          'Overpayment refund fee':
+            type: string
+          'Customer service phone':
+            type: string
+          'Complaint phone':
+            type: string
+          '24-hour lost report phone':
+            type: string
+          'Head office address':
+            type: string
+          'Website':
+            type: string
+          'Data update year':
+            type: string
+          'Data update month':
+            type: string
+          'Data update day':
+            type: string
     reservoirs:
       type: array
       items: 
@@ -26,7 +131,7 @@ components:
         properties:
           ReservoirName:
             type: string
-            description: Name of Reservoir.
+            description: Name of Reservoir(a.k.a the official full name).
           RecordTime:
             type: string
             description: recoding time.
@@ -34,3 +139,8 @@ components:
             type: string
             description: "water level of Reservoir"
         description: List of Reservoirs' status.
+    names:
+      type: array
+      items: 
+        type: string
+        description: The list of official full names with the specific type
