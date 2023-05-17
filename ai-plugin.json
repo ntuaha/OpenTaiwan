@@ -1,5 +1,5 @@
 {
-    "schema_version": "v1",
+    "schema_version": "v1.0.1",
     "name_for_human": "OpenTaiwan",
     "name_for_model": "OpenTaiwan",
     "description_for_human": "A plugin to provide government information in Taiwan",

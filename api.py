@@ -67,6 +67,34 @@ def getList():
     
 
 
+@app.route('/customer_support/creditcard/columns', methods=['POST'])
+def cs_cc_cols():
+    d = [
+        'No',
+        'Card Issuing Organization Name',
+        'Accounts receivable included in the revolving credit principal, interest commencement date for each account',
+'Reprinting statement fee',
+'Check payment dishonored fee',
+'Clearance (agency) repayment certificate fee',
+'Foreign transaction settlement fee',
+'Lost report fee',
+'Cash advance fee',
+'Review of signed transaction slip fee',
+'Penalty (late processing fee)',
+'Overpayment refund fee',
+'Customer service phone',
+'Complaint phone',
+'24-hour lost report phone',
+'Head office address',
+'Website',
+'Data update year',
+'Data update month',
+'Data update day'
+    ]
+    return jsonify(d)
+
+
+
 @app.route('/customer_support/creditcard', methods=['POST'])
 def cs():
     if request.is_json:
@@ -103,7 +131,7 @@ def cs():
 'Data update month',
 'Data update day'
     ]
-    d = data_frame[data_frame['Card Issuing Organization Name'].isin(request.get_json()['names'])].to_dict('records')
+    d = data_frame[data_frame['Card Issuing Organization Name'].isin(request.get_json()['names'])][request.get_json()['columns']].to_dict('records')
     return jsonify(d)
     
 
