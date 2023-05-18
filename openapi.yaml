@@ -21,7 +21,7 @@ paths:
   /customer_support/creditcard:
     post:
       operationId: cs_cc
-      summary: "Get Credit card fees and customer service phone numbers and other information in Taiwan By institutions. Before call the function, you should call function:lists to get official full names and call function:cs_cc_cols to get columns"
+      summary: "Get creditcard information in Taiwan By institutions. Before call the function, you must call function:lists and call function:cs_cc_cols to get official full names of columns"
       responses:
         "200":
           description: OK
@@ -30,29 +30,32 @@ paths:
               schema:
                 $ref: '#/components/schemas/cs_cc'
       requestBody:
-        description: names of the institutions and the column names of /customer_support/creditcard
+        description: the official full names of function:lists and the official full names of columns of function:cs_cc_cols
+        required: true
         content:
           application/json:
             schema:
               type: object
               properties:
                 names:
+                  required: true
                   type: array
                   items:
                     type: string
                     description: the official full name
-                  description: the official full names of institutions
+                  description: the official full names of function:lists
                 columns:
+                  required: true
                   type: array
                   items:
                     type: string
-                    description: the column name of /customer_support/creditcard
-                  description: the list of the column names of /customer_support/creditcard
+                    description: the official full name
+                  description: the list of the official full names of function:cs_cc_cols
   
   /customer_support/creditcard/columns:
     post:
       operationId: cs_cc_cols
-      summary: "Get column names in /customer_support/creditcard"
+      summary: "map query subjects to official full names of columns"
       responses:
         "200":
           description: OK
@@ -101,46 +104,46 @@ components:
       items: 
         type: object
         properties:
-          'No':
+          'no':
             type: string
-          'Card Issuing Organization Name':
+          'card issuing organization name':
             type: string
-          'Accounts receivable included in the revolving credit principal, interest commencement date for each account':
+          'accounts receivable included in the revolving credit principal, interest commencement date for each account':
             type: string
-          'Reprinting statement fee':
+          'reprinting statement fee':
             type: string
-          'Check payment dishonored fee':
+          'check payment dishonored fee':
             type: string
-          'Clearance (agency) repayment certificate fee':
+          'clearance (agency) repayment certificate fee':
             type: string
-          'Foreign transaction settlement fee':
+          'foreign transaction settlement fee':
             type: string
-          'Lost report fee':
+          'lost report fee':
             type: string
-          "Cash advance fee":
+          "cash advance fee":
             type: string
             description: Cash advance fee
-          'Review of signed transaction slip fee':
+          'review of signed transaction slip fee':
             type: string
-          'Penalty (late processing fee)':
+          'penalty (late processing fee)':
             type: string
-          'Overpayment refund fee':
+          'overpayment refund fee':
             type: string
-          'Customer service phone':
+          'customer service phone':
             type: string
-          'Complaint phone':
+          'complaint phone':
             type: string
           '24-hour lost report phone':
             type: string
-          'Head office address':
+          'head office address':
             type: string
-          'Website':
+          'website':
             type: string
-          'Data update year':
+          'data update year':
             type: string
-          'Data update month':
+          'data update month':
             type: string
-          'Data update day':
+          'data update day':
             type: string
     reservoirs:
       type: array
@@ -167,4 +170,4 @@ components:
       type: array
       items: 
         type: string
-        description: The list of the column names of /customer_support/creditcard
+        description: The list of the official full names
