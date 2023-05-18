@@ -10,7 +10,7 @@ This plugin allows users to access various information about the Taiwan from the
 
 ## Prerequisites
 - You need to have chatGPT plugin installed and activated on your open.ai account.
-- You need to have python 3.6 or higher installed on your machine.
+- You need to have python 3.8 or higher installed on your machine.
 
 ## Getting Started for Developers
 
