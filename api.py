@@ -86,22 +86,17 @@ def cs_cc():
     return jsonify(d)
 
 
-@app.route('/reservoirs', methods=['GET', 'POST'])
+@app.route('/reservoirs', methods=['GET'])
 def reservoirs():
 
     url = 'https://data.wra.gov.tw/OpenAPI/api/OpenData/1602CA19-B224-4CC3-AA31-11B1B124530F/Data?size=100&page=0'
+
+    headers = {'Content-Type': 'application/json'}
 
     if request.method == 'GET':
         response = requests.get(url, headers=headers, params=request.args)
         data = response.json()
         info = [{'WaterLevel': item['WaterLevel'] + "mm", 'RecordTime':item['ObservationTime'], 'ReservoirName':mm[item['ReservoirIdentifier']]} for item in data['responseData']]
-
-    elif request.method == 'POST':
-        print(request.headers)
-        response = requests.post(url, headers=headers, params=request.args, json=request.json)
-        return response.content
-    else:
-        raise NotImplementedError(f'Method {request.method} not implemented in wrapper for {path=}')
 
     return jsonify(info)
 
