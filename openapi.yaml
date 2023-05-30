@@ -6,6 +6,56 @@ info:
 servers:
   - url: http://localhost:3333
 paths:
+  /metaquery:
+    post:
+      operationId: getMetadata
+      summary: Get the list of datasets' metadata including columns, datasets' name and its descriptions.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/metadata'    
+      
+  /query:
+    post:
+      operationId: getData
+      summary: Get data from a specified dataset based on a query. The dataset, time range, columns, subject, and filter condition are determined based on the content of the query sentence. If the time range is not specified in the query, the latest data is returned. Before ask the function, you should ask function:getMetadata to get query parameters
+      # description: This operation takes a query sentence and returns data from a specified dataset. The dataset, time range, columns, subject, and filter condition are determined based on the content of the query sentence. If the time range is not specified in the query, the latest data is returned.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queryResult'
+      requestBody:
+        description: The query sentence and optional parameters. Time format based on postresql is in the timezone Asia/Taipei
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The query sentence.
+                  required: true
+                dataset:
+                  type: string
+                  description: The name of the dataset to select data from. Optional.
+                timeRange:
+                  type: string
+                  description: The time range to select data from. If not specified, select the latest data. Optional.
+                columns:
+                  type: array
+                  items:
+                    type: string
+                  description: The columns to select. If not specified, select all columns. Optional.
+                subject:
+                  type: string
+                  description: The subject to filter by. Optional.
+                filter:
+                  type: string
+                  description: The filter condition. Optional.
   /reservoirs:
     get:
       operationId: reservoirs
@@ -99,6 +149,27 @@ parameters:
 
 components:
   schemas:
+    metadata:
+      type: array
+      items:
+        'dataset_name':
+          type: string
+        "dataset_description":
+          type: string
+        'columns':
+          type: array
+          items: 
+            'column_name':
+              type: string
+            'column_type':
+              type: string
+            'column_description':
+              type: string
+    queryResult:
+        type: array
+        items: 
+          type: object
+          description: The result of the query.
     cs_cc:
       type: array
       items: 
